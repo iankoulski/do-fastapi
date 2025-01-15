@@ -3,10 +3,14 @@ kind: Ingress
 metadata:
   name: ${APP_NAME}
   namespace: ${NAMESPACE}
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: alb
   rules:
-  - host: "${APP_DNS_NAME}"
-    http:
+  - http:
       paths:
       - pathType: Prefix
         path: "/"
